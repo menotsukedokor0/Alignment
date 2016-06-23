@@ -1,0 +1,80 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <iomanip>
+using namespace std;
+
+class affine_gap
+{
+  int N,M;
+  int m, x, o, e;
+  string S1, S2;
+  vector < vector < vector <int> > > DP;
+  vector < vector < vector <int> > > TRACE;
+public:
+  affine_gap(const string &, const string &, const int m1, const int x1, const int o1, const int e1);
+  void calculate_matrix();
+  void traceback(stirng &, string &, stirng &);
+  int max(const i, const j);
+  void show();
+};
+
+void NW::show()
+{
+  for(int i = 0; i < 3; ++i)
+    {
+      switch(i)
+	{
+	case 0: cout << "diagonal" << endl; break;
+	case 1: cout << "vertical" << endl; break;
+	case 2: cout << "horizontal" << endl; break;
+	}
+      for(int j = 0; j <N; ++j)
+	{
+	  for(int k = 0; k < M; ++k)
+	    {
+	      cout << setw(3) << DP[i][j][k];
+	      cout << " ";
+	    }
+	  cout << endl;
+	}
+      cout << endl;
+    }
+  cout << endl;
+
+
+  for(int i = 0; i < 3; ++i)
+    {
+      switch(i)
+	{
+	case 0: cout << "diagonal" << endl; break;
+	case 1: cout << "vertical" << endl; break;
+	case 2: cout << "horizontal" << endl; break;
+	}
+      for(int j = 0; j <N; ++j)
+	{
+	  for(int k = 0; k < M; k++)
+	    {
+	      cout << setw(3) << TRACE[i][j][k];
+	      cout << " ";
+	    }
+	  cout << endl;
+	}
+      cout << endl;
+    }
+}
+
+affine_gap::calucalate_matric(const string &T1, const string &T2,const int m1,const int x1,const int o1m int e1)
+{
+  S1 = T1;
+  S2 = T2;
+  N = S1.size() + 1;
+  M = S2.size() + 1;
+  m = m1;
+  x = x1;
+  o = o1;
+  e = e1;
+  DP.resize(3, vector <int> (N, (vector <int> (M,0) ) );
+	    TRACE.resize(3, vector <int>(N, vector <int> (M,-1) ) );
+}

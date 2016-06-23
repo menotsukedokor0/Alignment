@@ -15,10 +15,46 @@ public:
   NW(const string &, const string &,const int m1,const int x1,const int o1);
   void linear();
   void traceback(string &, string &, string &);
-  int max(const int i, const int j);
+  virtual int max(const int i, const int j);
   void show();
 };
 //affine はこのクラスを継承すればいいのではないかな
+
+class affine: protected NW
+{
+  int e;
+  vector < vector <int> > H, V;
+public:
+  int max(const int i, const int j);
+};
+
+int affine::max(const int i, const int j)
+{
+  int sco = 0;
+  int drn = 0; 
+  if( S1[i-1] == S2[j-1])
+    {
+      sco = D[i-1][j-1] + m;
+    }
+  else
+    {
+      sco = D[i-1][j-1] + x;
+      drn = 3;
+    }
+  if( V[i-1][j] > sco)
+    {
+      sco = V[i-1][j] + e;
+      drn = 1;
+    }
+
+  if( H[i][j-1] > sco)
+    {
+      sco = H[i][j-1] + e;
+      drn = 2;
+    }
+  TRACE[i][j] = drn;
+  return sco;
+}
 
 
 void NW::show()

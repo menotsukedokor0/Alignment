@@ -56,7 +56,7 @@ NW::NW(const string &T1, const string &T2,const int m1,const int x1,const int o1
   o = o1;
   D.resize(N, vector <int> (M,0));
   TRACE.resize(N, vector <int> (M,-1));
-};
+}
 
 int NW::max(const int i,const int j)
 {
