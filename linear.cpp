@@ -14,7 +14,7 @@ class NW
 public:
   NW(const string &, const string &,const int m1,const int x1,const int o1);
   void linear();
-  void traceback(string &, string &, string &);
+  void traceback(string &, string &);
   int max(const int i, const int j);
   void show();
 };
@@ -69,7 +69,6 @@ int NW::max(const int i,const int j)
   else
     {
       sco = D[i-1][j-1] + x;
-      drn = 3;
     }
   if( D[i-1][j] > sco)
     {
@@ -111,7 +110,7 @@ void  NW::linear()
     }
 }
 
-void NW::traceback(string &T1, string &T2, string &T3)
+void NW::traceback(string &T1, string &T2)
 {
   if( ! T1.empty() )
     {
@@ -129,17 +128,17 @@ void NW::traceback(string &T1, string &T2, string &T3)
     {
       switch(TRACE[N-i][M-j])
 	{
-	case 0:  T1 += S1[N-i-1]; T2 += S2[M-j-1]; T3 += "*"; i++; j++; break;
-	case 1:  T1 += S1[N-i-1]; T2 += "-"; T3 += " "; i++; break;
-	case 2:  T1 += "-"; T2 += S2[M-j-1]; T3 += " "; j++; break;
-	case 3:  T1 += S1[N-i-1]; T2 += S2[M-j-1]; T3 += " "; i++; j++; break;
+	case 0:  T1 += S1[N-i-1]; T2 += S2[M-j-1]; i++; j++; break;
+	case 1:  T1 += S1[N-i-1]; T2 += "-";  i++; break;
+	case 2:  T1 += "-"; T2 += S2[M-j-1];  j++; break;
+
 	default: cout << "error" << endl; break;
 	}
       
     } 
   reverse(T1.begin(), T1.end() );
   reverse(T2.begin(), T2.end() );
-  reverse(T3.begin(), T3.end() );
+
 }
 
 
@@ -152,16 +151,24 @@ int main()
   cout << S1 << endl;
   cout << S2 << endl;
   NW aln(S1, S2, 2, -1, -2);
-  string A1,A2,A3;
+  string A1,A2;
   aln.linear();
   aln.show(); //DP行列とTRACE行列の確認
-  aln.traceback(A1,A2,A3);
+  aln.traceback(A1,A2);
   for(int i = 0; i < A1.size(); ++i)
     cout << "_";
   cout << endl;
 
   cout << A1 << endl;
   cout << A2 << endl;
-  cout << A3 << endl; 
+  for(int i = 0; i < A1.size(); i++)
+    {
+      if(A1[i] == A2[i])
+	cout << '*';
+      else
+	cout << " ";
+    }
+  cout << endl;
+
   return 0;
 }
