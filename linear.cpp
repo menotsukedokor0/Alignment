@@ -70,13 +70,13 @@ int NW::max(const int i,const int j)
     {
       sco = D[i-1][j-1] + x;
     }
-  if( D[i-1][j] > sco)
+  if( D[i-1][j] + o > sco)
     {
       sco = D[i-1][j] + o;
       drn = 1;
     }
 
-  if( D[i][j-1] > sco)
+  if( D[i][j-1] + o > sco)
     {
       sco = D[i][j-1] + o;
       drn = 2;
@@ -138,7 +138,6 @@ void NW::traceback(string &T1, string &T2)
     } 
   reverse(T1.begin(), T1.end() );
   reverse(T2.begin(), T2.end() );
-
 }
 
 
