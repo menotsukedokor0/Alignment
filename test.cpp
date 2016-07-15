@@ -27,9 +27,9 @@ int main(int argc, char* argv[])
   NW_affine Na(S1, S2, m, x, o, e);
   
   if(argv[1] == "-affine")
-    aln = &Nl;
-  else
     aln = &Na;
+  else
+    aln = &Nl;
 
   cout << S1 << endl;
   cout << S2 << endl;
