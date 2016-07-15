@@ -1,3 +1,6 @@
+#ifndef ___ALIGNMNET___
+#define ___ALIGNMENT___
+
 #include <vector>
 #include <string>
 using namespace std;
@@ -20,7 +23,7 @@ class Alignment{
 class NW_linear: public Alignment{
  protected:
   vector < vector <int> > DP, TRACE;
-public:
+ public:
   NW_linear(const string&, const string&, const int m1, const int x1, const int o1);
   void calculate_DP_matrix();
   void traceback(string&, string&);
@@ -32,10 +35,21 @@ class NW_affine: public Alignment{
  protected:
   int e;
   vector < vector <vector <int> > > DP, TRACE;
-public:
+ public:
   NW_affine(const string&, const string&, const int m1, const int x1, const int o1, const int e1);
   void calculate_DP_matrix();
   void traceback(string&, string&);
   void max(const int, const int);
   void show();
 };
+
+class SW_linear: public NW_linear{
+ public:
+  SW_linear(const string&, const string&, const int m1, const int x1, const int o1);
+  void calculate_DP_matrix();
+  void traceback(string&, string&);
+  void max(const int, const int);
+  void show();
+};
+
+#endif

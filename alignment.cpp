@@ -23,8 +23,6 @@ NW_linear::NW_linear(const string &T1, const string &T2, const int m1,const int 
   TRACE.resize(N, vector <int> (M,-1));
 }
 
-
-
 void  NW_linear::calculate_DP_matrix()
 {
   DP[0][0] = 0;
@@ -242,7 +240,6 @@ void NW_affine::max(int j, int k)
       sco = DP[2][j-1][k-1];
     }
  
-
   if( S1[j - 1] == S2[k - 1] )
     {
       DP[0][j][k] = sco + m;
@@ -324,7 +321,6 @@ void NW_affine::show()
     }
   cout << endl;
 
-  
   for(int i = 0; i < 3; ++i)
     {
       switch(i)
@@ -345,4 +341,143 @@ void NW_affine::show()
       cout << endl;
     }
   
+}
+
+SW_linear::SW_linear(const string &T1, const string &T2, const int m1, const int x1,const int o1): NW_linear(T1, T2, m1, x1, o1)
+{
+  ;
+}
+
+void  SW_linear::calculate_DP_matrix()
+{
+   for(int i = 1; i < N; i++)
+    {
+      for(int j = 1; j < M; j++)
+	{
+	  max(i, j);
+	}
+    }
+}
+
+void SW_linear::traceback(string &T1, string &T2)
+{
+  if( ! T1.empty() )
+    {
+      T1.erase(T1.begin(), T1.end() );
+    }
+  if( ! T2.empty())
+    {
+      T2.erase(T2.begin(), T2.end() );
+    }//与えられた配列が空であることの確認。空でないなら空にする。
+  //  cout << "input strings are empty" <<endl;
+  int score = 0;
+  int p = 4;
+  int q = 5;
+  for(int i = 0; i < N; i++)
+    {
+      for(int j = 0; j < M; j++)
+	{
+	  if( score < DP[i][j])
+	    {
+	      score = DP[i][j];
+	      p = i;
+	      q = j;
+	    }
+	}
+    }
+
+
+  cout << DP[p][q] << endl;
+  
+  while(1)
+    {
+      if(TRACE[p][q] == -1) break;
+      switch(TRACE[p][q])
+	{
+	case 0:
+	  {
+	    T1 += S1[p-1];
+	    T2 += S2[q-1];
+	    p--;
+	    q--;
+	    break;
+	  }
+	case 1:
+	  {
+	    T1 += S1[p-1];
+	    T2 += "-";
+	    p--;
+	    break;
+	  }
+	case 2:
+	  {
+	    T1 += "-";
+	    T2 += S2[q-1];
+	    q--;
+	    break;
+	  }
+	default: cerr << "err" << endl; break;
+	}
+    }
+
+  reverse(T1.begin(), T1.end() );
+  reverse(T2.begin(), T2.end() );
+}
+
+void SW_linear::max(const int i,const int j)
+{
+  int sco = DP[i-1][j-1];
+  int dir = 0; 
+  if( S1[i-1] == S2[j-1])
+    {
+      sco += m;
+    }
+  else
+    {
+      sco += x;
+    }
+
+  if( DP[i-1][j] + o > sco)
+    {
+      sco = DP[i-1][j] + o;
+      dir = 1;
+    }
+
+  if( DP[i][j-1] + o > sco)
+    {
+      sco = DP[i][j-1] + o;
+      dir = 2;
+    }
+
+  if( sco < 0)
+    {
+      sco = 0;
+      dir = -1;
+    }
+
+  TRACE[i][j] = dir;
+  DP[i][j] = sco;
+}
+
+void SW_linear::show()
+{
+  for(int i = 0; i < N; ++i)
+    {
+      for(int j = 0; j <M; ++j)
+	{
+	  cout << setw(3) << DP[i][j];
+	  cout << " ";
+	}
+      cout << endl;
+    }
+  cout << endl;
+  for(int i = 0; i < N; ++i)
+    {
+      for(int j = 0; j <M; ++j)
+	{
+	  cout << setw(3) << TRACE[i][j];
+	  cout << " ";
+	}
+      cout << endl;
+    }
 }
