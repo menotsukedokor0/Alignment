@@ -513,11 +513,62 @@ void SW_affine::calulate_DP_matrix()
     }
 }
 
-void traceback(string &A1, string &A2)
+void SW_affine::traceback(string &A1, string &A2)
 {
+  int p, q, r;
+  p = 0;
+  q = 0;
+  r = 0;
+  int max_score = 0;
+  for(int i = 0; i < N; i++)
+    {
+      for(int j = 0; j < M; j++)
+	{
+	  if(DP[0][j][k] > max_score)
+	    {
+	      max_score = DP[0][i][j];
+	      q = j;
+	      r = k;
+	    }
+	}
+    }
+
+  while(p >= 0)
+    {
+      switch(p){
+      case 0:
+	{
+	  p = TRACE[p][q][r];
+	  q--;
+	  r--;
+	  A1 += S1[q];
+	  A2 += S2[r];
+	  break;
+	}
+      case 1:
+	{
+	  p = TRACE[p][q][r];
+	  q--;
+	  A1 += S1[q];
+	  A2 += '-';
+	  break;
+	}
+      case 2:
+	{
+	  p = TRACE[p][q][r];
+	  r--;
+	  A1 += '-';
+	  A2 += S2[r];
+	  break;
+	}
+      default: cerr << "An error has occurred" << endl;
+      }
+    }
+  reverse(A1.begin(), A1.end() );
+  reverse(A2.begin(), A2.end() );
 }
 
-void nax(const int j, const int k)
+void SW_affine::max(const int j, const int k)
 {
   int sco, dir;
   if(DP[1][j-1][k-1] > DP[0][j-1][k-1] )
