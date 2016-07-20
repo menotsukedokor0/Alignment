@@ -484,16 +484,7 @@ void SW_linear::show()
 
 SW_affine::SW_affine(const string& T1, const string& T2, const int m1, const int x1, const int o1, const int e1): NW_affine(T1, T2, m1, x1, o1, e1)
 {
-  for(int i = 0; i < 3; i++)
-    {
-      for(int j = 0; j < N; j++)
-	{
-	  for(int k = 0; k < M; k++)
-	    {
-	      DP[i][j][k] = 0;
-	    }
-	}
-    }
+  ;
 }
 
 void SW_affine::calulate_DP_matrix()
