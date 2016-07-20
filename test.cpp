@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
   ifs >> x;
   ifs >> o;
   
-  int option[2] = 0;
+  int option[2] = {0, 0};
   for(int i = 0; i < argc; i++)
     {
       if(string(argv[i]) == "-SW")
@@ -57,8 +57,7 @@ int main(int argc, char* argv[])
       goto SW_L;
     }
  NW:
-  if
-if(option[1])
+  if(option[1])
     {
       goto NW_A;
     }
