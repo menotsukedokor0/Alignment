@@ -25,7 +25,8 @@ int main(int argc, char* argv[])
   NW_linear Nl(S1, S2, m, x, o);
   NW_affine Na(S1, S2, m, x, o, e);
   SW_linear Sl(S1, S2, m, x, o);
-  
+  SW_affine Sa(S1, S2, m, x, o);  
+
   // cout << "argv[1] = " << argv[1] << endl;
   //cout << "argv[1] == \"-affine\"? ";
   //cout << boolalpha  << bool(string(argv[1]) == "-affine") << endl;

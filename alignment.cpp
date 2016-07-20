@@ -487,7 +487,7 @@ SW_affine::SW_affine(const string& T1, const string& T2, const int m1, const int
   ;
 }
 
-void SW_affine::calulate_DP_matrix()
+void SW_affine::calculate_DP_matrix()
 {
    for(int i = 0; i <3; i++)
     {
@@ -524,11 +524,11 @@ void SW_affine::traceback(string &A1, string &A2)
     {
       for(int j = 0; j < M; j++)
 	{
-	  if(DP[0][j][k] > max_score)
+	  if(DP[0][i][j] > max_score)
 	    {
 	      max_score = DP[0][i][j];
-	      q = j;
-	      r = k;
+	      q = i;
+	      r = j;
 	    }
 	}
     }
