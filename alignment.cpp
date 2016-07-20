@@ -674,3 +674,48 @@ void SW_affine::max(const int j, const int k)
       TRACE[2][j][k] = dir;
   // calculation for horizontal
 }
+
+void SW_affine::show()
+{
+  for(int i = 0; i < 3; ++i)
+    {
+      switch(i)
+	{
+	case 0: cout << "diagonal" << endl; break;
+	case 1: cout << "vertical" << endl; break;
+	case 2: cout << "horizontal" << endl; break;
+	}
+      for(int j = 0; j <N; ++j)
+	{
+	  for(int k = 0; k < M; ++k)
+	    {
+	      cout << setw(5) << DP[i][j][k];
+	      cout << " ";
+	    }
+	  cout << endl;
+	}
+      cout << endl;
+    }
+  cout << endl;
+
+  for(int i = 0; i < 3; ++i)
+    {
+      switch(i)
+	{
+	case 0: cout << "diagonal" << endl; break;
+	case 1: cout << "vertical" << endl; break;
+	case 2: cout << "horizontal" << endl; break;
+	}
+      for(int j = 0; j <N; ++j)
+	{
+	  for(int k = 0; k < M; k++)
+	    {
+	      cout << setw(5) << TRACE[i][j][k];
+	      cout << " ";
+	    }
+	  cout << endl;
+	}
+      cout << endl;
+    }
+  
+}
