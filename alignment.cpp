@@ -489,4 +489,26 @@ SW_affine::SW_affine(const string& T1, const string& T2, const int m1, const int
 
 void SW_affine::calulate_DP_matrix()
 {
-  
+   for(int i = 0; i <3; i++)
+    {
+      DP[i][0][0] = 0;
+    }
+  for(int j = 1; j < N; j++)
+    {
+      DP[1][j][0] = 0;
+      TRACE[1][j][0] = -1;
+    }
+  for(int k= 1; k < M; k++)
+    {
+      DP[2][0][k] = 0;
+      TRACE[2][0][k] = -1;
+    }
+  //initialization
+ for(int j = 1; j < N; j++)
+    {
+      for(int k = 1; k < M; k++)
+	{
+	  max(j, k);
+	}
+    }
+}
