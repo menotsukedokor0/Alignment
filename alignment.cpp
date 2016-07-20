@@ -512,3 +512,114 @@ void SW_affine::calulate_DP_matrix()
 	}
     }
 }
+
+void traceback(string &A1, string &A2)
+{
+}
+
+void nax(const int j, const int k)
+{
+  int sco, dir;
+  if(DP[1][j-1][k-1] > DP[0][j-1][k-1] )
+    {
+      dir = 1;
+      sco = DP[1][j-1][k-1]; 
+    }
+  else
+    {
+      dir = 0;
+      sco =  DP[0][j-1][k-1];
+    }
+  if( DP[2][j-1][k-1] > sco) 
+    {
+      dir = 2;
+      sco = DP[2][j-1][k-1];
+    }
+  if( S1[j - 1] == S2[k - 1] )
+    {
+      sco += m;
+    }
+  else
+    {
+      sco += x;
+    }
+  if(sco < 0)
+    {
+      sco = 0;
+      dir = -1;
+    }
+  DP[1][j][k] = sco;
+  TRACE[1][j][k] = dir;
+  // calculation for diagonal
+
+  if( DP[1][j-1][k] + e > DP[0][j-1][k] + o )
+    {
+      sco = DP[1][j-1][k] + e ;
+      dir = 1;
+    }
+  else
+    {
+      dir = 0;
+      sco = DP[0][j-1][k] +o;
+    }
+  if(DP[2][j-1][k] + o > sco)
+    {
+      sco = DP[2][j-1][k] + o;
+      dir = 2;
+    }
+  if(sco < 0)
+    {
+      sco = 0;
+      dir = -1;
+    }
+  DP[1][j][k] = sco;
+  TRACE[1][j][k] = dir;
+  // calculation for vertical
+
+  if( DP[1][j-1][k] + e > DP[0][j-1][k] + o )
+    {
+      sco = DP[1][j-1][k] + e ;
+      dir = 1;
+    }
+  else
+    {
+      dir = 0;
+      sco = DP[0][j-1][k] +o;
+    }
+  if(DP[2][j-1][k] + o > sco)
+    {
+      DP[1][j][k] = DP[2][j-1][k] + o;
+      TRACE[1][j][k] = 2;
+    }
+  else
+    {
+      DP[1][j][k] = sco;
+      TRACE[1][j][k] = dir;
+    }
+  // calculation for vertical
+
+  if( DP[2][j][k-1] + e > DP[0][j][k-1] + o)
+    {
+      sco = DP[2][j][k-1] + e ;
+      dir = 2;
+    }
+  else
+    {
+      sco = DP[0][j][k-1] + o;
+      dir = 0;
+    }
+
+  if( DP[1][j][k-1] + o > sco )
+    {
+      sco = DP[1][j][k-1] + o;
+      dir = 1;
+    }
+  if(sco < 0)
+    {
+      sco = 0;
+      dir = -1;
+    }
+      DP[2][j][k] = sco;
+      TRACE[2][j][k] = dir;
+  // calculation for horizontal
+}
