@@ -52,4 +52,12 @@ class SW_linear: public NW_linear{
   void show();
 };
 
+class SW_affine: public NW_affine{
+ public:
+  SW_affine(const string&, const string&, const int m1, const int x1, const int o1, const int e1);
+  void calualte_DP_matrix();
+  void traceback(string&, string&);
+  void max(const int, const int);
+  void show();
+}
 #endif
