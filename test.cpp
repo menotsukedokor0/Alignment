@@ -5,7 +5,12 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-  
+  if(argc > 3)
+    {
+      cerr << "the number of option must be less than 2";
+      return 1;
+    }
+
   Alignment* aln;
   int m;
   int x;
@@ -20,31 +25,65 @@ int main(int argc, char* argv[])
   ifs >> m;
   ifs >> x;
   ifs >> o;
-  ifs >> e;
   
-  NW_linear Nl(S1, S2, m, x, o);
-  NW_affine Na(S1, S2, m, x, o, e);
-  SW_linear Sl(S1, S2, m, x, o);
-  SW_affine Sa(S1, S2, m, x, o);  
-
-  // cout << "argv[1] = " << argv[1] << endl;
-  //cout << "argv[1] == \"-affine\"? ";
-  //cout << boolalpha  << bool(string(argv[1]) == "-affine") << endl;
-  if(argc == 1) goto ERR;
-  if( string(argv[1]) == "-affine")
+  int option[2] = 0;
+  for(int i = 0; i < argc; i++)
     {
-      aln = &Na;
-    }
-  else 
-    {
-      if(string(argv[1]) == "-SW" )
-	aln = &Sl;
-      else
+      if(string(argv[i]) == "-SW")
 	{
-	ERR:
-	  aln = &Nl;
+	  option[0] = 1;
+	}
+      if(string(argv[i]) == "-affine")
+	{
+	  option[1] = 1;
 	}
     }
+  if(option[0])
+    {
+      goto SW;
+    }
+  else
+    {
+      goto NW;
+    }
+ SW:
+  ifs >> e;
+  if(option[1])
+    {
+      goto SW_A;
+    }
+  else
+    {
+      goto SW_L;
+    }
+ NW:
+  if
+if(option[1])
+    {
+      goto NW_A;
+    }
+  else
+    {
+      goto NW_L;
+    }
+ SW_A:
+  SW_affine sa(S1, S2, m, x, o, e); 
+  aln = sa;
+  goto END;
+ SW_L:
+   SW_linear sl(S1, S2, m, x, o);
+   aln = sl;
+   goto END;
+ NW_A:
+   NW_affine na(S1, S2, m, x, o, e);
+   aln = na;
+   goto END;
+ NW_L:
+   NW_linear nl(S1, S2, m, x, o);
+   aln = nl;
+   goto END;
+
+ END:
   cout << S1 << endl;
   cout << S2 << endl;
  
