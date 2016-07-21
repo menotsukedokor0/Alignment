@@ -1,11 +1,17 @@
 #include <iostream>
 #include "alignment.h"
 #include <fstream>
+#include <typeinfo>
 using namespace std;
 
 int main(int argc, char* argv[])
 {
-  
+  if(argc > 3)
+    {
+      cerr << "the number of option must be less than 2" << endl;
+      return 1;
+    }
+
   Alignment* aln;
   int m;
   int x;
@@ -21,37 +27,85 @@ int main(int argc, char* argv[])
   ifs >> x;
   ifs >> o;
   ifs >> e;
-  
-  NW_linear Nl(S1, S2, m, x, o);
-  NW_affine Na(S1, S2, m, x, o, e);
-  SW_linear Sl(S1, S2, m, x, o);
-  SW_affine Sa(S1, S2, m, x, o);  
 
-  // cout << "argv[1] = " << argv[1] << endl;
-  //cout << "argv[1] == \"-affine\"? ";
-  //cout << boolalpha  << bool(string(argv[1]) == "-affine") << endl;
-  if(argc == 1) goto ERR;
-  if( string(argv[1]) == "-affine")
+  SW_linear sl(S1, S2, m, x, o);
+  SW_affine sa(S1, S2, m, x, o, e);
+  NW_linear nl(S1, S2, m, x, o);
+  NW_affine na(S1, S2, m, x, o, e);
+  
+  int option[2] = {0, 0};
+  for(int i = 0; i < argc; i++)
     {
-      aln = &Na;
-    }
-  else 
-    {
-      if(string(argv[1]) == "-SW" )
-	aln = &Sl;
-      else
+      if(string(argv[i]) == "-SW")
 	{
-	ERR:
-	  aln = &Nl;
+	  option[0] = 1;
+	}
+      if(string(argv[i]) == "-affine")
+	{
+	  option[1] = 1;
 	}
     }
+  if(option[0])
+    {
+      goto SW;
+    }
+  else
+    {
+      goto NW;
+    }
+ SW:
+  // ifs >> e;
+  if(option[1])
+    {
+      goto SW_A;
+    }
+  else
+    {
+      goto SW_L;
+    }
+ NW:
+  if(option[1])
+    {
+      goto NW_A;
+    }
+  else
+    {
+      goto NW_L;
+    }
+ SW_A:
+  {
+    //SW_affine sa(S1, S2, m, x, o, e); 
+  aln = &sa;
+  goto END;
+  }
+ SW_L:
+  {
+    //SW_linear sl(S1, S2, m, x, o);
+   aln = &sl;
+   goto END;
+  }
+ NW_A:
+  {
+    // NW_affine na(S1, S2, m, x, o, e);
+   aln = &na;
+   goto END;
+  }
+ NW_L:
+   {
+     //NW_linear nl(S1, S2, m, x, o);
+   aln = &nl;
+   goto END;
+   }
+ END:
+   //コメントアウトした部分でオブジェクトを定義してやると何故か実行時ポリモーフィズムが実現できなくなる。typeid()によるとaln のさすオブジェクトの方が代入後もAlignmentクラスであるこという様子を見ている限り正しく代入できていないようだ。このままのプログラムでいくならif文連発で書いてgoto文を回避できるのでは。
+
   cout << S1 << endl;
   cout << S2 << endl;
- 
+  cout << typeid(*aln).name() << endl;
   string A1, A2;
   aln->calculate_DP_matrix();
   aln->show(); //DP行列とTRACE行列の確認
-  aln->traceback(A1,A2);
+  aln->traceback(A1, A2);
   for(int i = 0; i < A1.size(); ++i)
     cout << "_";
   cout << endl;
