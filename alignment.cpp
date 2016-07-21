@@ -533,7 +533,7 @@ void SW_affine::traceback(string &A1, string &A2)
 	}
     }
 
-  while(p >= 0)
+  while(TRACE[p][q][r] >= 0)
     {
       switch(p){
       case 0:
@@ -564,6 +564,7 @@ void SW_affine::traceback(string &A1, string &A2)
       default: cerr << "An error has occurred" << endl;
       }
     }
+
   reverse(A1.begin(), A1.end() );
   reverse(A2.begin(), A2.end() );
 }
@@ -599,8 +600,8 @@ void SW_affine::max(const int j, const int k)
       sco = 0;
       dir = -1;
     }
-  DP[1][j][k] = sco;
-  TRACE[1][j][k] = dir;
+  DP[0][j][k] = sco;
+  TRACE[0][j][k] = dir;
   // calculation for diagonal
 
   if( DP[1][j-1][k] + e > DP[0][j-1][k] + o )
