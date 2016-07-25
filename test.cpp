@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
   int option[2] = {0, 0};
   for(int i = 0; i < argc; i++)
     {
-      if(string(argv[i]) == "-SW")
+      if(string(argv[i]) == "-local")
 	{
 	  option[0] = 1;
 	}
@@ -45,62 +45,34 @@ int main(int argc, char* argv[])
 	  option[1] = 1;
 	}
     }
+  
   if(option[0])
     {
-      goto SW;
+      if(option[1])
+	{
+	  aln = &sa;
+	}
+      else
+	{
+	  aln = &sl;
+	}
     }
   else
     {
-      goto NW;
-    }
- SW:
-  // ifs >> e;
-  if(option[1])
-    {
-      goto SW_A;
-    }
-  else
-    {
-      goto SW_L;
-    }
- NW:
-  if(option[1])
-    {
-      goto NW_A;
-    }
-  else
-    {
-      goto NW_L;
-    }
- SW_A:
-  {
-    //SW_affine sa(S1, S2, m, x, o, e); 
-  aln = &sa;
-  goto END;
-  }
- SW_L:
-  {
-    //SW_linear sl(S1, S2, m, x, o);
-   aln = &sl;
-   goto END;
-  }
- NW_A:
-  {
-    // NW_affine na(S1, S2, m, x, o, e);
-   aln = &na;
-   goto END;
-  }
- NW_L:
-   {
-     //NW_linear nl(S1, S2, m, x, o);
-   aln = &nl;
-   goto END;
-   }
- END:
-   //コメントアウトした部分でオブジェクトを定義してやると何故か実行時ポリモーフィズムが実現できなくなる。typeid()によるとaln のさすオブジェクトの方が代入後もAlignmentクラスであるこという様子を見ている限り正しく代入できていないようだ。このままのプログラムでいくならif文連発で書いてgoto文を回避できるのでは。
-
+      if(option[1])
+	{
+	  aln = &na;
+	}
+      else
+	{
+	  aln = &nl;
+	}
+    }	
+   //nコメントアウトした部分でオブジェクトを定義してやると何故か実行時ポリモーフィズムが実現できなくなる。typeid()によるとaln のさすオブジェクトの方が代入後もAlignmentクラスであるこという様子を見ている限り正しく代入できていないようだ。このままのプログラムでいくならif文連発で書いてgoto文を回避できるのでは。
+  cout << "Test sequeces:" << endl;
   cout << S1 << endl;
   cout << S2 << endl;
+  cout << "Alignment Type:" <<
   cout << typeid(*aln).name() << endl;
   string A1, A2;
   aln->calculate_DP_matrix();
