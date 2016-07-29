@@ -386,9 +386,6 @@ void SW_linear::traceback(string &T1, string &T2)
 	}
     }
 
-
-  cout << DP[p][q] << endl;
-  
   while(1)
     {
       if(TRACE[p][q] == -1) break;

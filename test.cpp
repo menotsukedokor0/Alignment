@@ -68,7 +68,6 @@ int main(int argc, char* argv[])
 	  aln = &nl;
 	}
     }	
-   //nコメントアウトした部分でオブジェクトを定義してやると何故か実行時ポリモーフィズムが実現できなくなる。typeid()によるとaln のさすオブジェクトの方が代入後もAlignmentクラスであるこという様子を見ている限り正しく代入できていないようだ。このままのプログラムでいくならif文連発で書いてgoto文を回避できるのでは。
   cout << "Test sequeces:" << endl;
   cout << S1 << endl;
   cout << S2 << endl;
@@ -76,7 +75,7 @@ int main(int argc, char* argv[])
   cout << typeid(*aln).name() << endl;
   string A1, A2;
   aln->calculate_DP_matrix();
-  aln->show(); //DP行列とTRACE行列の確認
+  //aln->show(); //DP行列とTRACE行列の確認
   aln->traceback(A1, A2);
   for(int i = 0; i < A1.size(); ++i)
     cout << "_";
