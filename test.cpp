@@ -78,7 +78,7 @@ int main(int argc, char* argv[])
   aln->calculate_DP_matrix();
   aln->show(); //DP行列とTRACE行列の確認
   aln->traceback(A1, A2);
-  for(int i = 0; i < A1.siZe(); ++i)
+  for(int i = 0; i < A1.size(); ++i)
     cout << "_";
   cout << endl;
 
