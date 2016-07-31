@@ -371,8 +371,8 @@ void SW_linear::traceback(string &T1, string &T2)
     }//与えられた配列が空であることの確認。空でないなら空にする。
   //  cout << "input strings are empty" <<endl;
   int score = 0;
-  int p = 4;
-  int q = 5;
+  int p = 0;
+  int q = 0;
   for(int i = 0; i < N; i++)
     {
       for(int j = 0; j < M; j++)
